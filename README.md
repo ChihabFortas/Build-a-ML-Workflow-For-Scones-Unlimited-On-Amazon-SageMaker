@@ -61,7 +61,7 @@ This notebook has been tested on the **Python 3 (Data Science)** kernel with the
 ## Results:
 
 ### Lambda Functions:
-![Lambda Functions](Images/Step_Function_Order.PNG "Lambda Functions")
+![Lambda Functions](Images/lambda_functions.PNG "Lambda Functions")
 
 1. The [Serialize Image Data Lambda Function](lambda_functions/serializeImageData.py): 
 takes the address of an image hosted in S3, then serializes and returns a JSON object.
