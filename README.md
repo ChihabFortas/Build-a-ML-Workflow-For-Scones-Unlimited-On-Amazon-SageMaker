@@ -19,7 +19,7 @@ In this project, you’ll use AWS Sagemaker to build an image classification mod
 ## Workspace Instructions
 
 * For this project, you will complete the work within the AWS lab provided through the Udacity classroom.
-* Proceed with the project within the [jupyter notebook](SconesUnlimited.ipynb).
+* Proceed with the project within the [jupyter notebook](Build_a_ML_Workflow_For_Scones_Unlimited_Notebook.ipynb).
 
 ## Project Environment
 
@@ -60,18 +60,23 @@ This notebook has been tested on the **Python 3 (Data Science)** kernel with the
 
 ## Results:
 
-### lambda functions:
-1. The [Serialoze Image Data Lambda Function](lambda%20functions/serializeImageData.py) takes the address of an image hosted in S3, then serializes and returns a JSON
-object.
-2. The [Infer Serialized Image Data](lambda%20functions/inferSerializedImageData.py) takes the JSON object returned from 1 and passes it to an end point and collectd the result
-as a JSON Object.
-3. The [Filter Results Lambda Function](lambda%20functions/filterResults.py) takes the inference data from 2 and filters only the images that meet the defined threshold.  
+### Lambda Functions:
+![Lambda Functions](Images/Step_Function_Order.PNG "Lambda Functions")
 
-### Execution Flow of the Step Function 
-![Execution Event History of ML Workflow](images/2021-12-21_23h00_19.png "Execution Event History")
+1. The [Serialize Image Data Lambda Function](lambda_functions/serializeImageData.py): 
+takes the address of an image hosted in S3, then serializes and returns a JSON object.
 
-### Step Functions Graph
-![Step Functions Graph](images/stepfunctions_graph%20.png "Step Functions") ![Step Functions Graph Working](images/stepfunctions_graph_working.png "Step Functions - After Execution")
+2. The [Classify Image Data Function](lambda_functions/classifyImageData.py):
+takes the JSON object returned from the **Serialize Image Data Lambda Function** and passes it to an end point and return the inference result.
 
-### Step Function Output
-![Step Function Output](images/Step-Function-Output.png)
+3. The [Filter Low Confidence Function](lambda_functions/filterLowConfidence.py) takes the result from inference data from the **Classify Image Data Function** and return the images that surpass the threshold.  
+
+
+### Step Function Summary
+![Step Function Summary](Images/step_function_summary.PNG "Step Function Summary")
+
+### Step Function Working
+![Step Function Creation](Images/Step_Function_Order.PNG "Step Functions Creation")
+
+![Step Function Working](Images/Step_Function_success.PNG "Step Function Working")
+

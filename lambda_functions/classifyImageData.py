@@ -13,19 +13,19 @@ runtime= boto3.client('sagemaker-runtime')
 def lambda_handler(event, context):
 
     # Decode the image data
-    image = base64.b64decode(event['image_data'])
+    image = base64.b64decode(event["body"]["image_data"])
 
     # Instantiate a Predictor
     response = runtime.invoke_endpoint(
         EndpointName=ENDPOINT,
         Body=image,
-        ContentType='application/x-image'
+        ContentType='image/png'
     )
     
-    inferences = response['Body'].read().decode('utf-8')
-    event["inferences"] = [float(x) for x in inferences[1:-1].split(',')]
+    decode_response = response['Body'].read().decode('utf-8')
+    inferences = [float(x) for x in decode_response[1:-1].split(',')]
 
     return {
         'statusCode': 200,
-        'body': json.dumps(event)
+        'inferences': inferences
     }
